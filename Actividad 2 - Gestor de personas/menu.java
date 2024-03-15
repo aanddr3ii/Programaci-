@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-	class Ciudadano implements Serializable {
+	class Ciudadano  {
 	    private String nombre;
 	    private String dni;
 	    private int edad;
@@ -44,10 +44,12 @@ import java.util.Scanner;
 	    public String toString() {
 	        return "Nombre: " + nombre + ", DNI: " + dni + ", Edad: " + edad;
 	    }
-	}
-
+	} // Finalización de Getters y Setters
+	
+	
+	
 	public class menu {
-	    private static final String FILENAME = "ciudadanos.dat";
+	    private static final String nameFile = "ciudadanos.txt";
 	    private static ArrayList<Ciudadano> ciudadanos = new ArrayList<>();
 
 	    public static void main(String[] args) {
@@ -56,7 +58,7 @@ import java.util.Scanner;
 	        Scanner scanner = new Scanner(System.in);
 
 	        while (true) {
-	            System.out.println("\n¿Qué quieres hacer?");
+	            System.out.println("\n¿Qué te gustaría hacer?");
 	            System.out.println("1. Añadir nuevo ciudadano");
 	            System.out.println("2. Imprimir ciudadanos");
 	            System.out.println("3. Modificar un ciudadano");
@@ -64,7 +66,7 @@ import java.util.Scanner;
 	            System.out.println("5. Salir");
 
 	            int opcion = scanner.nextInt();
-	            scanner.nextLine(); // Consume la nueva línea después de nextInt()
+	            scanner.nextLine(); 
 
 	            switch (opcion) {
 	                case 1:
@@ -89,20 +91,36 @@ import java.util.Scanner;
 	        }
 	    }
 
+
+
 	    private static void cargarDatos() {
-	        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
-	            ciudadanos = (ArrayList<Ciudadano>) ois.readObject();
-	            System.out.println("Datos cargados correctamente.");
+	        try (Scanner scanner = new Scanner(new File(nameFile))) {
+	            while (scanner.hasNextLine()) {
+	            	// este string lee la linea y la separa por partes que mas adelante llamaremos con otras strings
+	                String[] partes = scanner.nextLine().split(",");
+	                // en este se asigna el primera parte a nombr y se hace el trim
+	                // el trim se utiliza para eliminar espacios en blanco
+	                String nombre = partes[0].trim();
+	                String dni = partes[1].trim();
+	                int edad = Integer.parseInt(partes[2].trim());
+	                ciudadanos.add(new Ciudadano(nombre, dni, edad));
+	            }
+	            System.out.println("Los datos se han cargado correctamente.");
 	        } catch (FileNotFoundException e) {
 	            System.out.println("No se encontró el archivo de datos. Se creará uno nuevo al guardar los datos.");
-	        } catch (IOException | ClassNotFoundException e) {
+	        } catch (IOException e) {
 	            System.out.println("Error al cargar los datos: " + e.getMessage());
 	        }
 	    }
 
+
 	    private static void guardarDatos() {
-	        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
-	            oos.writeObject(ciudadanos);
+	    	// el printwriter escribe los datos que le he proporcionado en el documento de .txt
+	        try (PrintWriter writer = new PrintWriter(new FileWriter(nameFile))) {
+	        	// el bucle for para guardar a cada ciudadano en el arraylist ciudadanos especificando con Ciudadano como se guardara
+	            for (Ciudadano ciudadano : ciudadanos) {
+	                writer.println(ciudadano.getNombre() + ", " + ciudadano.getDni() + ", " + ciudadano.getEdad());
+	            }
 	            System.out.println("Datos guardados correctamente.");
 	        } catch (IOException e) {
 	            System.out.println("Error al guardar los datos: " + e.getMessage());
@@ -118,11 +136,11 @@ import java.util.Scanner;
 
 	        System.out.println("Introduce la edad del ciudadano:");
 	        int edad = scanner.nextInt();
-	        scanner.nextLine(); // Consume la nueva línea después de nextInt()
+	        scanner.nextLine(); 
 
 	        Ciudadano nuevoCiudadano = new Ciudadano(nombre, dni, edad);
 	        ciudadanos.add(nuevoCiudadano);
-	        System.out.println("Ciudadano añadido correctamente.");
+	        System.out.println("Ha sido añadido correctamente" + " " +nombre);
 	    }
 
 	    private static void imprimirCiudadanos() {
@@ -147,21 +165,21 @@ import java.util.Scanner;
 	        System.out.println("2. Por posición");
 
 	        int opcion = scanner.nextInt();
-	        scanner.nextLine(); // Consume la nueva línea después de nextInt()
+	        scanner.nextLine(); 
 
 	        switch (opcion) {
 	            case 1:
-	                modificarPorDNI(scanner);
+	            	modificar_porDNI(scanner);
 	                break;
 	            case 2:
-	                modificarPorPosicion(scanner);
+	            	modificar_porPosicion(scanner);
 	                break;
 	            default:
 	                System.out.println("Opción inválida.");
 	        }
 	    }
 
-	    private static void modificarPorDNI(Scanner scanner) {
+	    private static void modificar_porDNI(Scanner scanner) {
 	        System.out.println("Introduce el DNI del ciudadano a modificar:");
 	        String dni = scanner.nextLine();
 
@@ -173,7 +191,7 @@ import java.util.Scanner;
 
 	                System.out.println("Introduce la nueva edad:");
 	                int nuevaEdad = scanner.nextInt();
-	                scanner.nextLine(); // Consume la nueva línea después de nextInt()
+	                scanner.nextLine(); 
 	                ciudadano.setEdad(nuevaEdad);
 
 	                System.out.println("Ciudadano modificado correctamente.");
@@ -184,14 +202,15 @@ import java.util.Scanner;
 	        System.out.println("No se encontró ningún ciudadano con ese DNI.");
 	    }
 
-	    private static void modificarPorPosicion(Scanner scanner) {
-	        System.out.println("Introduce la posición del ciudadano a modificar (empezando desde 1):");
+	    private static void modificar_porPosicion(Scanner scanner) {
+	        System.out.println("Introduce la posición del ciudadano a modificar 'Empieza desde 1 no 0 :)' :");
 	        int posicion = scanner.nextInt();
-	        scanner.nextLine(); // Consume la nueva línea después de nextInt()
-
+	        scanner.nextLine(); 
+	        // || 'o' siempre se me olvida asi que un putisimo recordatorio 
 	        if (posicion < 1 || posicion > ciudadanos.size()) {
 	            System.out.println("Posición inválida.");
 	        } else {
+	        	// como empezamos con uno en vez de cero se lo resatamos para que de en la posicion correcta
 	            Ciudadano ciudadano = ciudadanos.get(posicion - 1);
 	            System.out.println("Introduce el nuevo nombre:");
 	            String nuevoNombre = scanner.nextLine();
@@ -199,7 +218,7 @@ import java.util.Scanner;
 
 	            System.out.println("Introduce la nueva edad:");
 	            int nuevaEdad = scanner.nextInt();
-	            scanner.nextLine(); // Consume la nueva línea después de nextInt()
+	            scanner.nextLine(); 
 	            ciudadano.setEdad(nuevaEdad);
 
 	            System.out.println("Ciudadano modificado correctamente.");
@@ -217,7 +236,7 @@ import java.util.Scanner;
 	        System.out.println("2. Por posición");
 
 	        int opcion = scanner.nextInt();
-	        scanner.nextLine(); // Consume la nueva línea después de nextInt()
+	        scanner.nextLine(); 
 
 	        switch (opcion) {
 	            case 1:
@@ -227,7 +246,7 @@ import java.util.Scanner;
 	                eliminarPorPosicion(scanner);
 	                break;
 	            default:
-	                System.out.println("Opción inválida.");
+	                System.out.println("Opción no valida intentalo de nuevo.");
 	        }
 	    }
 
@@ -249,7 +268,7 @@ import java.util.Scanner;
 	    private static void eliminarPorPosicion(Scanner scanner) {
 	        System.out.println("Introduce la posición del ciudadano a eliminar (empezando desde 1):");
 	        int posicion = scanner.nextInt();
-	        scanner.nextLine(); // Consume la nueva línea después de nextInt()
+	        scanner.nextLine(); 
 
 	        if (posicion < 1 || posicion > ciudadanos.size()) {
 	            System.out.println("Posición inválida.");
@@ -259,5 +278,3 @@ import java.util.Scanner;
 	        }
 	    }
 	}
-
-
