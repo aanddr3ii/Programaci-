@@ -1,0 +1,48 @@
+Comandos principales:
+
+Fetch
+Merge
+Pull
+Push
+
+Repositorio:
+Es una caja vacía donde puedes almacenar tu proyecto. Aquí se encuentran todos los archivos del proyecto.
+
+En el nuevo repositorio:
+Add .gitignore: Para ignorar cambios en nuestro repositorio.
+
+Verde (Añadir):
+Representa archivos o cambios que se han añadido a tu proyecto. Estos pueden ser nuevos archivos que has creado o archivos existentes que has incluido en tu próximo commit.
+
+Rojo (Quitar):
+Indica archivos o cambios que has eliminado de tu proyecto. Puede ser la eliminación de archivos existentes o la exclusión de ciertos cambios antes de realizar un commit.
+
+Amarillo (Modificar):
+Muestra archivos o cambios que han sido modificados desde la última confirmación. Esto incluye cambios en el contenido de un archivo o ajustes realizados en un archivo existente.
+
+Para hacer cambios:
+Ponemos un resumen (título) y una descripción.
+Damos clic al botón "Commit to main" para guardar en el repositorio local.
+Luego, clic en "Publish branch" para enviar los cambios a la nube.
+"Branch" (rama en español) es una copia independiente de un conjunto de archivos en tu proyecto.
+
+Commit:
+Captura un estado específico de tus archivos locales.
+Solo afecta tu repositorio local.
+
+Push:
+Comparte tus commits con el repositorio remoto (la nube, como GitHub).
+Permite a otros colaboradores ver y obtener esos cambios.
+Create Pull Request:
+
+Propósito: 
+Cuando trabajas en una rama (branch) separada con cambios que deseas incorporar a la rama principal (por lo general, llamada "master" o "main").
+
+
+Merge into current branch:
+
+Propósito: 
+Fusionar cambios de una rama en otra, comúnmente de una rama secundaria a la rama principal.
+
+Fetch en Git y GitHub:
+Se utiliza para obtener los cambios desde un repositorio remoto a tu repositorio local sin realizar una fusión automática.

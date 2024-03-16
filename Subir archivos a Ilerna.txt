@@ -1,0 +1,7 @@
+// Abre Git Bash e ingresa tu correo personal del centro y un nombre de usuario; en nuestro caso, el nombre.
+
+alumnat@A36-PC08 MINGW64 ~
+$ git config --global user.email "Email"
+
+alumnat@A36-PC08 MINGW64 ~
+$ git config --global user.name "userName"
